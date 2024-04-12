@@ -2,6 +2,24 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+use App\Http\Controllers\{
+    PreLogin\AuthController,
+    FormController
+};
+
+Route::prefix('/login')->group(function(){
+
+    Route::get('', [AuthController::class, 'login'])->name('login');
+
+    Route::get('/github', [AuthController::class, 'redirectToProvider'])->name('login.github');
+
+    Route::get('/github/callback', [AuthController::class, 'handleProviderCallback'])->name('login.github.callback');
+
+});
+
+Route::middleware(['auth'])->group(function () {
+
+    Route::get('/', [FormController::class, 'index'])->name('home');
+
+    Route::post('/', [FormController::class, 'convert'])->name('home.convert');
 });
