@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\{
     PreLogin\AuthController,
-    FormController
+    FormController,
+    AccountController
 };
 
 Route::prefix('/login')->group(function(){
@@ -15,11 +16,13 @@ Route::prefix('/login')->group(function(){
 
     Route::get('/github/callback', [AuthController::class, 'handleProviderCallback'])->name('login.github.callback');
 
-});
+})->middleware('guest');
 
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/', [FormController::class, 'index'])->name('home');
 
     Route::post('/', [FormController::class, 'convert'])->name('home.convert');
+
+    Route::get('/logout', [AccountController::class, 'logout'])->name('logout');
 });

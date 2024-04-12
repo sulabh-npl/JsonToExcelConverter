@@ -7,13 +7,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Exception, DB;
 use Illuminate\Support\Facades\Auth;
-
 use Laravel\Socialite\Facades\Socialite;
-
 use App\Models\User;
 
 class AuthController extends Controller
 {
+    public function __construct()
+    {
+        if(Auth::check()){
+
+            return redirect()->route('home')->with('error', 'You are already logged in')->send();
+        }
+    }
     public function login()
     {
         return view('auth.login');
@@ -48,8 +53,7 @@ class AuthController extends Controller
 
             if(Auth::check()){
 
-                // dd('Logged in');
-                return redirect()->route('home');
+                return redirect()->route('home')->with('success', 'Logged in successfully');
             }
 
             return redirect()->route('login')->with('error', 'Unable to login');

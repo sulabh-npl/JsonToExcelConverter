@@ -31,10 +31,12 @@ class FormController extends Controller
 
         // Store the field names in the top of the data array
         $fieldNames = array_keys($data[0]);
+
+        // Add the field names to the beginning of the data array
         array_unshift($data, $fieldNames);
 
         // Set the file name for the downloaded file
-        $fileName = Str::uuid().'.xlsx';
+        $fileName = 'converted_file.xlsx';
 
         // Create the Excel file
         Excel::store(new JsonToExcelExport($data), $fileName);

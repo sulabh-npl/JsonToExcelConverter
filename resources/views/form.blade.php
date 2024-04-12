@@ -14,11 +14,6 @@
                         <label for="json" class="col-md-4 col-form-label text-md-right">{{ __('Json') }}</label>
                         <div class="col-md-6">
                             <input type="file" name="file" id="json" class="form-control @error('json') is-invalid @enderror" required>
-                            @error('json')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
                         </div>
                     </div>
                     <div class="form-group row mb-0">
@@ -26,6 +21,9 @@
                             <button type="submit" class="btn btn-primary">
                                 {{ __('Convert') }}
                             </button>
+                            <a href="{{ route('logout') }}" class="btn btn-secondary">
+                                {{ __('Logout') }}
+                            </a>
                         </div>
                     </div>
                 </form>
